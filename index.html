@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pendaftaran</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-4 flex flex-col items-center min-h-screen">
+
+    <!-- FORM PENDAFTARAN -->
+    <div class="w-full max-w-sm bg-white shadow rounded overflow-hidden">
+        <div class="bg-blue-600 text-white text-center py-3 font-bold rounded-t">FORM PENDAFTARAN</div>
+        <div class="p-4 space-y-4">
+            <div>
+                <label class="block text-blue-600 font-semibold mb-1">Nama Lengkap :</label>
+                <input type="text" placeholder="Nama Lengkap" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-blue-600 font-semibold mb-1">Tempat, Tanggal Lahir :</label>
+                <input type="text" placeholder="Tempat, Tanggal Lahir" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-blue-600 font-semibold mb-1">Jenis Kelamin :</label>
+                <select class="w-full border rounded px-3 py-2">
+                    <option>Pilih Jenis Kelamin</option>
+                    <option>Laki-laki</option>
+                    <option>Perempuan</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-blue-600 font-semibold mb-1">Alamat :</label>
+                <input type="text" placeholder="Alamat" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-blue-600 font-semibold mb-1">Nomor Telegram Aktif :</label>
+                <div class="flex">
+                    <span class="bg-gray-200 px-3 py-2 border rounded-l">+62</span>
+                    <input type="text" placeholder="Nomor Telegram"
+                        class="w-full border-t border-b border-r rounded-r px-3 py-2">
+                </div>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-full rounded">DAFTAR</button>
+        </div>
+    </div>
+
+    <div class="mt-6 w-full max-w-md bg-white rounded shadow overflow-hidden" x-data="{
+    scrollDown() {
+      const box = this.$refs.scrollBox;
+      let scrollInterval = setInterval(() => {
+        if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
+          box.scrollTop = 0; // ulang dari atas
+        } else {
+          box.scrollTop += 1;
+        }
+      }, 30);
+    }
+  }" x-init="scrollDown">
+        <div class="max-h-64 overflow-y-auto" x-ref="scrollBox">
+            <template
+                x-for="user in ['Fatik', 'Mamat', 'Ferry', 'Siti', 'Andi', 'Rina', 'Tono', 'Maya', 'Dewi', 'Putri', 'Budi', 'Lina', 'Riko', 'Yani']"
+                :key="user">
+                <div class="flex items-center gap-3 p-3 border-b bg-gray-50">
+                    <img src="https://via.placeholder.com/40x40?text=👤" alt="avatar" class="w-10 h-10 rounded-full">
+                    <div>
+                        <p class="font-bold text-black" x-text="user"></p>
+                        <p class="text-gray-600">Berhasil Bergabung ✅</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
