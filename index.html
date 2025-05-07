@@ -12,38 +12,90 @@
 <body class="bg-gray-100 p-4 flex flex-col items-center min-h-screen">
 
     <!-- FORM PENDAFTARAN -->
-    <div class="w-full max-w-md bg-white shadow rounded overflow-hidden sm:w-11/12 md:w-3/4 lg:w-1/2">
+    <div class="w-full max-w-md bg-white shadow rounded overflow-hidden sm:w-11/12 md:w-3/4 lg:w-1/2" x-data="{
+        namaLengkap: '',
+        tempatTanggalLahir: '',
+        jenisKelamin: '',
+        alamat: '',
+        nomorTelegram: '',
+        isNamaValid: true,
+        isTempatTanggalLahirValid: true,
+        isJenisKelaminValid: true,
+        isAlamatValid: true,
+        isNomorTelegramValid: true,
+        validateTempatTanggalLahir() {
+        const regex = /^[a-zA-Z\s]+,\s(\d{2})[-/](\d{2})[-/](\d{4})$/;
+        this.isTempatTanggalLahirValid = regex.test(this.tempatTanggalLahir);
+        },
+        validateForm() {
+            this.isNamaValid = this.namaLengkap.trim() !== '';
+            this.isJenisKelaminValid = this.jenisKelamin !== '';
+            this.isAlamatValid = this.alamat.trim() !== '';
+            this.isNomorTelegramValid = /^\d{8,15}$/.test(this.nomorTelegram);
+        }
+    }">
+
         <div class="bg-blue-600 text-white text-center py-3 font-bold text-lg rounded-t">FORM PENDAFTARAN</div>
         <div class="p-4 space-y-4">
+            <!-- Nama Lengkap -->
             <div>
                 <label class="block text-blue-600 font-semibold mb-1">Nama Lengkap :</label>
-                <input type="text" placeholder="Nama Lengkap" class="w-full border rounded px-3 py-2">
+                <input type="text" x-model="namaLengkap" @input="validateForm()" placeholder="Nama Lengkap"
+                    class="w-full border rounded px-3 py-2" :class="{'border-red-500': !isNamaValid}">
+                <p x-show="!isNamaValid" class="text-red-500 text-sm">Nama Lengkap tidak boleh kosong</p>
             </div>
+
+            <!-- Tempat, Tanggal Lahir -->
             <div>
                 <label class="block text-blue-600 font-semibold mb-1">Tempat, Tanggal Lahir :</label>
-                <input type="text" placeholder="Tempat, Tanggal Lahir" class="w-full border rounded px-3 py-2">
+                <input type="text" x-model="tempatTanggalLahir" @input="validateTempatTanggalLahir()"
+                    placeholder="Contoh: Palu, 01-01-2000" class="w-full border rounded px-3 py-2"
+                    :class="{'border-red-500': !isTempatTanggalLahirValid}">
+
+                <p x-show="!isTempatTanggalLahirValid" class="text-red-500 text-sm">
+                    Format tempat dan tanggal tidak valid. Gunakan format "Kota, DD-MM-YYYY".
+                </p>
             </div>
+
+            <!-- Jenis Kelamin -->
             <div>
                 <label class="block text-blue-600 font-semibold mb-1">Jenis Kelamin :</label>
-                <select class="w-full border rounded px-3 py-2">
-                    <option>Pilih Jenis Kelamin</option>
+                <select x-model="jenisKelamin" @change="validateForm()" class="w-full border rounded px-3 py-2"
+                    :class="{'border-red-500': !isJenisKelaminValid}">
+                    <option value="">Pilih Jenis Kelamin</option>
                     <option>Laki-laki</option>
                     <option>Perempuan</option>
                 </select>
+                <p x-show="!isJenisKelaminValid" class="text-red-500 text-sm">Jenis Kelamin harus dipilih</p>
             </div>
+
+            <!-- Alamat -->
             <div>
                 <label class="block text-blue-600 font-semibold mb-1">Alamat :</label>
-                <input type="text" placeholder="Alamat" class="w-full border rounded px-3 py-2">
+                <input type="text" x-model="alamat" @input="validateForm()" placeholder="Alamat"
+                    class="w-full border rounded px-3 py-2" :class="{'border-red-500': !isAlamatValid}">
+                <p x-show="!isAlamatValid" class="text-red-500 text-sm">Alamat tidak boleh kosong</p>
             </div>
+
+            <!-- Nomor Telegram -->
             <div>
                 <label class="block text-blue-600 font-semibold mb-1">Nomor Telegram Aktif :</label>
                 <div class="flex">
                     <span class="bg-gray-200 px-3 py-2 border rounded-l">+62</span>
-                    <input type="text" placeholder="Nomor Telegram"
-                        class="w-full border-t border-b border-r rounded-r px-3 py-2">
+                    <input type="text" x-model="nomorTelegram" @input="validateForm()" placeholder="Nomor Telegram"
+                        class="w-full border-t border-b border-r rounded-r px-3 py-2"
+                        :class="{'border-red-500': !isNomorTelegramValid}">
                 </div>
+                <p x-show="!isNomorTelegramValid" class="text-red-500 text-sm">Nomor Telegram tidak valid</p>
             </div>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-full rounded">DAFTAR</button>
+
+            <!-- Tombol Daftar -->
+            <button
+                :disabled="!isNamaValid || !isTempatTanggalLahirValid || !isJenisKelaminValid || !isAlamatValid || !isNomorTelegramValid"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 w-full rounded opacity-75"
+                :class="{'opacity-50 cursor-not-allowed': !isNamaValid || !isTempatTanggalLahirValid || !isJenisKelaminValid || !isAlamatValid || !isNomorTelegramValid}">
+                DAFTAR
+            </button>
         </div>
     </div>
 
@@ -90,6 +142,7 @@
             </template>
         </div>
     </div>
+
 </body>
 
 </html>
