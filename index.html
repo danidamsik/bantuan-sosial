@@ -49,30 +49,47 @@
 
     <!-- DAFTAR PENGGUNA -->
     <div class="mt-6 w-full max-w-md sm:w-11/12 md:w-3/4 lg:w-1/2 bg-white rounded shadow overflow-hidden" x-data="{
+        users: [
+          { nama: 'Fatik', gambar: 'https://randomuser.me/api/portraits/men/1.jpg', penarikan: 150 },
+          { nama: 'Mamat', gambar: 'https://randomuser.me/api/portraits/men/2.jpg', penarikan: 320 },
+          { nama: 'Ferry', gambar: 'https://randomuser.me/api/portraits/men/3.jpg', penarikan: 210 },
+          { nama: 'Siti', gambar: 'https://randomuser.me/api/portraits/women/1.jpg', penarikan: 180 },
+          { nama: 'Andi', gambar: 'https://randomuser.me/api/portraits/men/4.jpg', penarikan: 275 },
+          { nama: 'Rina', gambar: 'https://randomuser.me/api/portraits/women/2.jpg', penarikan: 95 },
+          { nama: 'Tono', gambar: 'https://randomuser.me/api/portraits/men/5.jpg', penarikan: 400 },
+          { nama: 'Maya', gambar: 'https://randomuser.me/api/portraits/women/3.jpg', penarikan: 145 },
+          { nama: 'Dewi', gambar: 'https://randomuser.me/api/portraits/women/4.jpg', penarikan: 360 },
+          { nama: 'Putri', gambar: 'https://randomuser.me/api/portraits/women/5.jpg', penarikan: 130 },
+          { nama: 'Budi', gambar: 'https://randomuser.me/api/portraits/men/6.jpg', penarikan: 290 },
+          { nama: 'Lina', gambar: 'https://randomuser.me/api/portraits/women/6.jpg', penarikan: 220 },
+          { nama: 'Riko', gambar: 'https://randomuser.me/api/portraits/men/7.jpg', penarikan: 310 },
+          { nama: 'Yani', gambar: 'https://randomuser.me/api/portraits/women/7.jpg', penarikan: 170 }
+        ],
         scrollDown() {
-            const box = this.$refs.scrollBox;
-            let scrollInterval = setInterval(() => {
-                if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
-                    box.scrollTop = 0; // ulang dari atas
-                } else {
-                    box.scrollTop += 1;
-                }
-            }, 30);
+          const box = this.$refs.scrollBox;
+          let scrollInterval = setInterval(() => {
+            if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
+              box.scrollTop = 0;
+            } else {
+              box.scrollTop += 1;
+            }
+          }, 30);
         }
-    }" x-init="scrollDown">
+      }" x-init="scrollDown">
         <div class="max-h-64 overflow-y-auto" x-ref="scrollBox">
-            <template
-                x-for="user in ['Fatik', 'Mamat', 'Ferry', 'Siti', 'Andi', 'Rina', 'Tono', 'Maya', 'Dewi', 'Putri', 'Budi', 'Lina', 'Riko', 'Yani']"
-                :key="user">
+            <template x-for="user in users" :key="user.nama">
                 <div class="flex items-center gap-3 p-3 border-b bg-gray-50">
-                    <img src="https://via.placeholder.com/40x40?text=👤" alt="avatar" class="w-10 h-10 rounded-full">
+                    <img :src="user.gambar" alt="avatar" class="w-10 h-10 rounded-full object-cover">
                     <div>
-                        <p class="font-bold text-black" x-text="user"></p>
-                        <p class="text-gray-600 text-sm">Berhasil Bergabung ✅</p>
+                        <p class="font-bold text-black" x-text="user.nama"></p>
+                        <p class="text-green-600 text-sm">
+                            Berhasil Menarik ✅ <span x-text="'RM ' + user.penarikan.toLocaleString()"></span>
+                        </p>
                     </div>
                 </div>
             </template>
         </div>
     </div>
 </body>
+
 </html>
